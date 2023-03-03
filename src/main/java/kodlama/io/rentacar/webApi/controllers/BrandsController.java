@@ -24,7 +24,7 @@ public class BrandsController {
     }
 
     @GetMapping("/{id}")
-    GetByIdBrandResponse getById(@PathVariable int id) {
+    public GetByIdBrandResponse getById(@PathVariable int id) {
         return brandService.getById(id);
     }
 

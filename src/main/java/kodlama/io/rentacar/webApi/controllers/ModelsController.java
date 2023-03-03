@@ -18,12 +18,12 @@ public class ModelsController {
     private ModelService modelService;
 
     @GetMapping
-    List<GetAllModelsResponse> getAll() {
+    public List<GetAllModelsResponse> getAll() {
         return modelService.getAll();
     }
 
     @GetMapping("/{id}")
-    GetByIdModelResponse getById(@PathVariable int id) {
+    public GetByIdModelResponse getById(@PathVariable int id) {
         return this.modelService.getById(id);
     }
 
