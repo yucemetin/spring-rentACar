@@ -5,6 +5,7 @@ import kodlama.io.rentacar.business.requests.CreateBrandrequest;
 import kodlama.io.rentacar.business.requests.UpdateBrandRequest;
 import kodlama.io.rentacar.business.responses.GetAllBrandsResponse;
 import kodlama.io.rentacar.business.responses.GetByIdBrandResponse;
+import kodlama.io.rentacar.business.rules.BrandBusinessRules;
 import kodlama.io.rentacar.core.utilities.mappers.ModelMapperService;
 import kodlama.io.rentacar.dataAccess.abstracts.BrandRepository;
 import kodlama.io.rentacar.entities.concretes.Brand;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class BrandManager implements BrandService {
     private BrandRepository brandRepository;
     private ModelMapperService modelMapperService;
+    private BrandBusinessRules brandBusinessRules;
 
     @Override
     public List<GetAllBrandsResponse> getAll() {
@@ -37,13 +39,14 @@ public class BrandManager implements BrandService {
 
     @Override
     public void add(CreateBrandrequest createBrandrequest) {
+        this.brandBusinessRules.checkIfBrandNameExists(createBrandrequest.getName());
         Brand brand = this.modelMapperService.forRequest().map(createBrandrequest, Brand.class);
-
         this.brandRepository.save(brand);
     }
 
     @Override
     public void update(UpdateBrandRequest updateBrandRequest) {
+        this.brandBusinessRules.checkIfBrandNameExists(updateBrandRequest.getName());
         Brand brand = this.modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
         this.brandRepository.save(brand);
     }
